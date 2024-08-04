@@ -1,0 +1,30 @@
+{
+    "name": "craymend/stannp-php-sdk",
+    "description": "A PHP wrapper for the stannp.com API",
+    "keywords": [
+        "stannp",
+        "php",
+        "api",
+        "sdk"
+    ],
+    "homepage": "https://github.com/craymend/stannp-php-sdk",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Cray Mend",
+            "email": "craymend1@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": "^8.1",
+        "guzzlehttp/guzzle": "^7.9"
+    },
+    "autoload": {
+        "psr-4": {
+            "Craymend\\Stannp\\": "src/"
+        }
+    }
+}
