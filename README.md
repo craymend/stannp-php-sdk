@@ -1,4 +1,4 @@
-# Sttanp API SDK
+# Stannp API SDK
 
 This package is a PHP wrapper for the [stannp.com API](https://www.stannp.com/us/direct-mail-api/guide).
 
@@ -24,7 +24,7 @@ Create an instance of Request. Use testEndpoint() to call `/v1/users/me`
 <?php
 require __DIR__ . '/vendor/autoload.php';
 
-use Craymend\Staanp\Request;
+use Craymend\Stannp\Request;
 
 echo "Query test endpoint\n";
 
@@ -50,7 +50,7 @@ More Examples:
 <?php
 require __DIR__ . '/vendor/autoload.php';
 
-use Craymend\Staanp\Request;
+use Craymend\Stannp\Request;
 
 $apiKey = 'your-api-key';
 $request = new Request($apiKey);
