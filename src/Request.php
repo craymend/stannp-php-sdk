@@ -15,12 +15,12 @@ final class Request
     /**
      * @var string
      */
-    private $baseUrl;
+    public $baseUrl;
 
     /**
      * @var string
      */
-    private $apiKey;
+    public $apiKey;
 
     /**
      * @return null
@@ -30,13 +30,6 @@ final class Request
         $this->baseUrl = self::BASE_URL;
 
         return null;
-    }
-
-    /**
-     * @return string
-     */
-    public function getBaseUrl(){
-        return $this->baseUrl;
     }
 
     /**
