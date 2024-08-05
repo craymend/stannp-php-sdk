@@ -32,14 +32,13 @@ $apiKey = 'your-api-key';
 $request = new Request($apiKey);
 
 $response = $request->testEndpoint();
-if($response->getSuccess()){
-    $data = $response->getData();
+
+if($response->success){
     echo "Endpoint Test: SUCCESS\n";
-    echo 'Data: ' . json_encode($data) . "\n";
+    echo 'Data: ' . json_encode($response->data) . "\n";
 }else{
-    $errors = $response->getErrors();
     echo "Endpoint Test: FAIL\n";
-    echo 'Errors: ' . json_encode($errors) . "\n";
+    echo 'Errors: ' . json_encode($response->errors) . "\n";
 }
 ```
 
@@ -61,12 +60,11 @@ echo 'Test getting recipient: ' . $uri . "\n";
 $recipientId = '111111111111';
 $uri = '/v1/recipients/get/' . $recipientId;
 $response = $request->get($uri, []);
-if($response->getSuccess()){
-    $data = $response->getData();
-    echo 'Data: ' . json_encode($data) . "\n";
+
+if($response->success){
+    echo 'Data: ' . json_encode($response->data) . "\n";
 }else{
-    $errors = $response->getErrors();
-    echo 'Error: ' . json_encode($errors) . "\n";
+    echo 'Error: ' . json_encode($response->errors) . "\n";
 }
 
 // Test querying an error
@@ -74,12 +72,11 @@ echo "Test error query\n";
 
 $uri = '/v1/not-an-endpoint';
 $response = $request->get($uri, []);
-if($response->getSuccess()){
-    $data = $response->getData();
-    echo 'Data: ' . json_encode($data) . "\n";
+
+if($response->success){
+    echo 'Data: ' . json_encode($response->data) . "\n";
 }else{
-    $errors = $response->getErrors();
-    echo 'Error: ' . json_encode($errors) . "\n";
+    echo 'Error: ' . json_encode($response->errors) . "\n";
 }
 ```
 
