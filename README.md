@@ -4,7 +4,7 @@ This package is a PHP wrapper for the [stannp.com API](https://www.stannp.com/us
 
 ### Requirements
 
-This project works with PHP 8.2+.
+This project works with PHP 8.1+.
 
 You will also need a stannp.com API key.
 
@@ -34,11 +34,11 @@ $request = new Request($apiKey);
 $response = $request->testEndpoint();
 
 if($response->success){
-    echo "Endpoint Test: SUCCESS\n";
-    echo 'Data: ' . json_encode($response->data) . "\n";
+    echo "Endpoint Test SUCCESS: $response->statusCode\n";
+    echo 'User id: ' . json_encode($response->data->data->id) . "\n";
 }else{
-    echo "Endpoint Test: FAIL\n";
-    echo 'Errors: ' . json_encode($response->errors) . "\n";
+    echo "Endpoint Test FAIL: $response->statusCode\n";
+    echo 'Errors: ' . json_encode($response->error) . "\n";
 }
 ```
 
@@ -64,7 +64,7 @@ $response = $request->get($uri, []);
 if($response->success){
     echo 'Data: ' . json_encode($response->data) . "\n";
 }else{
-    echo 'Error: ' . json_encode($response->errors) . "\n";
+    echo "Error $response->statusCode: " . json_encode($response->error) . "\n";
 }
 
 // Test querying an error
@@ -76,7 +76,7 @@ $response = $request->get($uri, []);
 if($response->success){
     echo 'Data: ' . json_encode($response->data) . "\n";
 }else{
-    echo 'Error: ' . json_encode($response->errors) . "\n";
+    echo "Error $response->statusCode: " . json_encode($response->error) . "\n";
 }
 ```
 
