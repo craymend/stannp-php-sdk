@@ -93,12 +93,6 @@ final class Request
         $headers['Authorization'] = 'Basic ' . base64_encode($this->apiKey . ':'); 
         $headers['content-type'] = 'application/x-www-form-urlencoded';
 
-        // if ($method === 'POST' && null !== $data) {
-        //     $headers['content-type'] = 'application/x-www-form-urlencoded';
-        // }else if ($method === 'PUT' && null !== $data) {
-        //     $headers['content-type'] = 'application/json';
-        // }
-
         $requestOptions[RequestOptions::HEADERS] = $headers;
 
         // set data
@@ -110,23 +104,20 @@ final class Request
             $requestOptions[RequestOptions::JSON] = $data;
         }
 
-        // echo 'Guzzle request options: <br><br>';
-        // echo json_encode($requestOptions);
-        // echo '<br><br>';
-
         // send request
         try {
             $client = new Client();
 
             $response = $client->request($method, $url, $requestOptions);
+            $data = json_decode($response->getBody(), false);
+            $statusCode = $response->getStatusCode();
 
-            $data = (array) json_decode($response->getBody(), true);
-
-            return new Response(true, $data);
+            return new Response(true, $statusCode, $data, null);
+        }catch(\GuzzleHttp\Exception\RequestException $e) {
+            $statusCode = $e->getResponse() ? $e->getResponse()->getStatusCode() : null;
+            return new Response(false, $statusCode, null, $e->getMessage());
         }catch (\Exception $e) {
-            $errors['errors'] = [$e->getMessage()];
-
-            return new Response(false, [], $errors);
+            return new Response(false, null, null, $e->getMessage());
         }
     }
 }

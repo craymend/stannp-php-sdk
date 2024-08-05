@@ -13,26 +13,28 @@ final class Response
     public $success;
 
     /**
-     * @var array
+     * @var int
      */
-    public $data = [];
+    public $statusCode;
 
     /**
-     * @var array
+     * @var object
      */
-    public $errors = [];
+    public $data;
+
+    /**
+     * @var string
+     */
+    public $error;
 
     /**
      * Contructor
      */
-    public function __construct($success = true, array $response = [], array $errors = [])
+    public function __construct($success = true, int $statusCode = null, object $response = null, string $error = null)
     {
         $this->success = $success;
-
-        if ($success) {
-            $this->data = $response;
-        } else {
-            $this->errors = $errors;
-        }
+        $this->statusCode = $statusCode;
+        $this->data = $response;
+        $this->error = $error;
     }
 }
