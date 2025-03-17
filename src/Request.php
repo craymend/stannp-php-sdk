@@ -85,7 +85,7 @@ final class Request
     /**
      * @return Response
      */
-    private function sendRequest($method, $url, array $data = null)
+    private function sendRequest($method, $url, array | null $data = null)
     {
         $requestOptions = [];
         $headers = [];
@@ -96,11 +96,10 @@ final class Request
 
         // Set data based on the method
         if (($method === 'POST' || $method === 'PUT') && $data !== null) {
-            $fileFields = ['front', 'back'];
-            
             $hasFile = false;
-            foreach ($fileFields as $fileField) {
-                if (isset($data[$fileField])) {
+
+            foreach ($data as $key => $value) {
+                if (isset($value['type']) && $value['type'] === 'file') {
                     $hasFile = true;
                     break;
                 }
@@ -110,17 +109,17 @@ final class Request
                 $multipart = [];
 
                 foreach ($data as $key => $value) {
-                    if (!in_array($key, $fileFields)) {
+                    if (!isset($value['type']) || $value['type'] !== 'file') {
                         $multipart[] = ['name' => $key, 'contents' => $value];
                     }
                 }
 
-                foreach ($fileFields as $fileField) {
-                    if (isset($data[$fileField])) {
+                foreach ($data as $key => $value) {
+                    if (isset($value['type']) && $value['type'] === 'file') {
                         $multipart[] = [
-                            'name' => $fileField,
-                            'contents' => fopen($data[$fileField]['path'], 'r'),
-                            'filename' => $data[$fileField]['filename']
+                            'name' => $key,
+                            'contents' => fopen($value['path'], 'r'),
+                            'filename' => $value['filename']
                         ];
                     }
                 }

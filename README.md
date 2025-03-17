@@ -80,6 +80,40 @@ if($response->success){
 }
 ```
 
+For payloads with files, you can use the following format:
+
+```php
+require __DIR__ . '/vendor/autoload.php';
+
+use Craymend\Stannp\Request;
+
+$apiKey = 'your-api-key';
+$request = new Request($apiKey);
+
+$payload = [
+    'name' => $postcardTitle,
+    'type' => $postcardType,
+    'what_recipients' => $whatRecipients,
+    'size' => $postcardSize,
+    'save_as_template' => true,
+    'group_id' => $stannpGroupId,
+    'file' => [
+        'path' => 'path/to/file.pdf', 
+        'filename' => 'file.pdf', 
+        'type' => 'file'
+    ]
+];
+
+$response = $request->post('/v1/campaigns/create', $payload);
+
+if($response->success){
+    echo 'Data: ' . json_encode($response->data) . "\n";
+}else{
+    echo "Error $response->statusCode: " . json_encode($response->error) . "\n";
+}
+
+```
+
 ## License
 
 MIT
